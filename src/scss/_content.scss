@@ -1,0 +1,22 @@
+.content_inner{
+    background-image: url('../images/background.svg');
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+opacity: 0.9;    
+background-position:bottom  bottom;
+margin-top: 112px;
+position: relative;
+
+}
+
+.content{
+    display: flex;
+    justify-content: space-between;
+    &_right{
+      display: grid;
+      grid-template-columns: auto;
+      grid-template-rows: 200px 129px 163px 215px;  
+    }
+}

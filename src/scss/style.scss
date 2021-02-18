@@ -1,0 +1,15 @@
+@import '_header.scss';
+@import '_grades-container.scss';
+@import '_content.scss';
+@import '_homework-list.scss';
+@import '_admin.scss';
+
+
+body{
+    font-family: 'Montserrat', sans-serif;
+}
+
+.container{
+    max-width: 1516px;
+    margin: 0 auto;
+}

@@ -1,0 +1,114 @@
+.grades{
+    grid-column: 1/2;
+    grid-row: 4/5;
+    background: rgba(255, 255, 255, 0.795);
+    border: 1px solid #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 5px;
+    width: 700px;
+    padding: 20px;
+    
+&-slider{
+    width: 100%;
+    margin-top: 4%;
+    &-item{
+        background: #FFFFFF;
+        width: 90px !important;
+        height: 90px !important;
+        border-radius: 50%;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        margin-right: 22px;
+        & span{
+            font-style: normal;
+font-weight: bold;
+font-size: 48px;
+line-height: 59px;
+
+color: #FFA600;
+        }
+    }
+}
+    &-first{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+& h2{
+    font-family: Montserrat;
+font-style: normal;
+font-weight: bold;
+font-size: 36px;
+line-height: 44px;
+color: #4F4F4F;
+position: relative;
+display: flex;
+align-items: center;
+&::after{
+    position: absolute;
+    width: 29px;
+    height: 2px;
+    content: '';
+    background: orange;
+left: 160px;
+}
+}
+    }
+}
+.gengrade-perweek{
+    grid-row: 2/3;
+    background: #fff8ebda;
+    border-radius: 5px;
+    max-height: 83px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    & span {
+        font-style: normal;
+font-weight: 600;
+font-size: 28px;
+line-height: 37px;
+color: #4F4F4F;
+    }
+    & p{
+        font-style: normal;
+font-weight: 600;
+font-size: 42px;
+line-height: 59px;
+
+color: #FFA600;
+    }
+}
+.gengrade-pergeneral{
+    grid-row: 3/4;
+    background: #fff8ebda;
+border-radius: 5px;
+max-height: 83px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 0 20px;
+& span {
+    font-style: normal;
+font-weight: 600;
+font-size: 28px;
+line-height: 37px;
+color: #4F4F4F;
+}
+& p{
+    font-style: normal;
+font-weight: 600;
+font-size: 42px;
+line-height: 59px;
+
+color: #FFA600;
+}
+
+}
+.arrow-slider-grades--left, .arrow-slider-grades--right{
+    background:transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}

@@ -1,0 +1,15 @@
+.header{
+    background-color: orange;
+    height: 75px;
+    width: 100%;
+ &_inner{
+     display: flex;
+     justify-content: flex-end;
+     align-items: center;
+ }
+}
+
+.admin-link{
+       margin-right: 50px;
+       margin-top: -10px;
+}
