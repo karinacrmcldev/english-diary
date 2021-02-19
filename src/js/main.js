@@ -53,11 +53,42 @@ async function getTasksFromDB() {
   return data;
 }
 
-function addGradeToLS(grade) {
-  const grades = JSON.parse(localStorage.getItem("grades")) || [];
+async function addGradeToLS(grade) {
+  const grades = (await getGradesFromDB()) || [];
+  console.log(grades);
   grades.push(grade);
-  localStorage.setItem("grades", JSON.stringify(grades));
+  addGradesToDB(grades);
 }
+
+async function getGradesFromDB() {
+  const response = await fetch(
+    "https://chatte-a619b-default-rtdb.europe-west1.firebasedatabase.app/grades.json",
+    {
+      method: "GET",
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  const data = await response.json();
+  return data;
+}
+
+const addGradesToDB = async (grades) => {
+  const response = await fetch(
+    "https://chatte-a619b-default-rtdb.europe-west1.firebasedatabase.app/grades.json",
+    {
+      method: "PUT",
+      body: JSON.stringify(grades),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  const data = await response.json();
+  console.log(data);
+};
 
 //function which display elements in the main page(useless code right here)
 
