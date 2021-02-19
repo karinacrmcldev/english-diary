@@ -10,17 +10,47 @@ gradesBtn.addEventListener("click", addGrade);
 
 function addHwTask() {
   addHomeworkToLS(homeworkInput.value); //adds value to array in local storage
-  addHomeworkToDocument(); //function to add text as element in page
 }
 
 function addGrade() {
   addGradeToLS(gradesInput.value);
 }
 
-function addHomeworkToLS(task) {
-  const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+const addHomeworkToDB = async (tasks) => {
+  const response = await fetch(
+    "https://chatte-a619b-default-rtdb.europe-west1.firebasedatabase.app/chatte.json",
+    {
+      method: "PUT",
+      body: JSON.stringify(tasks),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  const data = await response.json();
+  console.log(data);
+};
+
+async function addHomeworkToLS(task) {
+  const tasks = (await getTasksFromDB()) || [];
+  console.log(tasks);
   tasks.push(task);
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+  addHomeworkToDB(tasks);
+}
+
+async function getTasksFromDB() {
+  const response = await fetch(
+    "https://chatte-a619b-default-rtdb.europe-west1.firebasedatabase.app/chatte.json",
+    {
+      method: "GET",
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  const data = await response.json();
+  return data;
 }
 
 function addGradeToLS(grade) {

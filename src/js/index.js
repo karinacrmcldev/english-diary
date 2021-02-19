@@ -5,8 +5,23 @@ const gradesBtn = document.getElementById("grades-btn");
 const homeworkContainer = document.querySelector(".homework-inner");
 const gradesContainer = document.querySelector(".grades-slider");
 
-function addHomeworkToDocument() {
-  let tasksToCreate = JSON.parse(localStorage.getItem("tasks")) || [];
+async function getTasksFromDB() {
+  const response = await fetch(
+    "https://chatte-a619b-default-rtdb.europe-west1.firebasedatabase.app/chatte.json",
+    {
+      method: "GET",
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  const data = await response.json();
+  return data;
+}
+
+async function addHomeworkToDocument() {
+  let tasksToCreate = (await getTasksFromDB()) || [];
   textOfTasks = tasksToCreate.map(function createHwTemplate(item) {
     return `
       <div class="homework-item">
