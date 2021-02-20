@@ -5,6 +5,13 @@ const gradesBtn = document.getElementById("grades-btn");
 const homeworkContainer = document.querySelector(".homework-inner");
 const gradesContainer = document.querySelector(".grades-slider");
 
+const gradePerWeekContainer = document.querySelector("gengrade-perweek p");
+const gradeInGenContainer = document.querySelector("gengrade-pergeneral p");
+
+// function insertGradeGeneral(result) {
+//   gradeInGenContainer.insertAdjacentHTML(result);
+// }
+
 async function getTasksFromDB() {
   const response = await fetch(
     "https://chatte-a619b-default-rtdb.europe-west1.firebasedatabase.app/chatte.json",
@@ -42,9 +49,9 @@ async function addHomeworkToDocument() {
       <div class="homework-item">
       <div class="homework-title">Д.з</div>
       <div class="homework-text">
-       ${item}
+       ${item.task}
       </div>
-      <div class="homework-date">2020.02.16</div>
+      <div class="homework-date">${item.date}</div>
     </div>
       `;
   });
@@ -67,8 +74,7 @@ async function addGradeToDocument() {
 </div>
       `;
   });
-  let createdTemplates = textOfTasks.map((item) => generateGradeTask(item));
-  console.log(createdTemplates);
+  textOfTasks.map((item) => generateGradeTask(item));
 }
 
 function generateGradeTask(gradetemplate) {

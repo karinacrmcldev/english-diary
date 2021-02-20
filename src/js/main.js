@@ -3,17 +3,25 @@ const gradesInput = document.querySelector(".grade-add");
 const homeworkBtn = document.getElementById("homework-btn");
 const gradesBtn = document.getElementById("grades-btn");
 const homeworkContainer = document.querySelector(".homework-inner");
-const gradesContainer = document.querySelector(".grades-slider");
+
+const dateContainer = document.querySelector(".homework-date");
+
+const gradePerWeekContainer = document.querySelector("gengrade-perweek p");
+const gradeInGenContainer = document.querySelector("gengrade-pergeneral p");
 
 homeworkBtn.addEventListener("click", addHwTask);
 gradesBtn.addEventListener("click", addGrade);
 
+moment().format("MMMM Do YYYY, h:mm:ss a");
+
 function addHwTask() {
-  addHomeworkToLS(homeworkInput.value); //adds value to array in local storage
+  const date = moment().format("L");
+  addHomeworkToLS(homeworkInput.value, date); //adds value to array in
 }
 
 function addGrade() {
   addGradeToLS(gradesInput.value);
+  // generateGradeInGeneral();
 }
 
 const addHomeworkToDB = async (tasks) => {
@@ -31,10 +39,14 @@ const addHomeworkToDB = async (tasks) => {
   console.log(data);
 };
 
-async function addHomeworkToLS(task) {
+async function addHomeworkToLS(task, date) {
   const tasks = (await getTasksFromDB()) || [];
-  console.log(tasks);
-  tasks.push(task);
+  console.log(typeof tasks);
+  const homeworkItem = {
+    task,
+    date,
+  };
+  tasks.push(homeworkItem);
   addHomeworkToDB(tasks);
 }
 
@@ -60,6 +72,21 @@ async function addGradeToLS(grade) {
   addGradesToDB(grades);
 }
 
+const addGradesToDB = async (grades) => {
+  const response = await fetch(
+    "https://chatte-a619b-default-rtdb.europe-west1.firebasedatabase.app/grades.json",
+    {
+      method: "PUT",
+      body: JSON.stringify(grades),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  const data = await response.json();
+  console.log(typeof data);
+};
+
 async function getGradesFromDB() {
   const response = await fetch(
     "https://chatte-a619b-default-rtdb.europe-west1.firebasedatabase.app/grades.json",
@@ -75,20 +102,24 @@ async function getGradesFromDB() {
   return data;
 }
 
-const addGradesToDB = async (grades) => {
-  const response = await fetch(
-    "https://chatte-a619b-default-rtdb.europe-west1.firebasedatabase.app/grades.json",
-    {
-      method: "PUT",
-      body: JSON.stringify(grades),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-  const data = await response.json();
-  console.log(data);
-};
+// function generateGradePerWeek(array) {}
+
+// async function generateGradeInGeneral() {
+//   const response = await fetch(
+//     "https://chatte-a619b-default-rtdb.europe-west1.firebasedatabase.app/grades.json",
+//     {
+//       method: "GET",
+
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     }
+//   );
+//   const data = await response.json();
+//   const result = data.reduce((prev, number) => prev + +number, 0) / data.length;
+//   // return result;
+//   console.log(result);
+// }
 
 //function which display elements in the main page(useless code right here)
 
