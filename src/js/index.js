@@ -5,12 +5,8 @@ const gradesBtn = document.getElementById("grades-btn");
 const homeworkContainer = document.querySelector(".homework-inner");
 const gradesContainer = document.querySelector(".grades-slider");
 
-const gradePerWeekContainer = document.querySelector("gengrade-perweek p");
-const gradeInGenContainer = document.querySelector("gengrade-pergeneral p");
-
-// function insertGradeGeneral(result) {
-//   gradeInGenContainer.insertAdjacentHTML(result);
-// }
+const gradePerWeekContainer = document.querySelector(".gengrade-perweek p");
+const gradeInGenContainer = document.querySelector(".gengrade-pergeneral p");
 
 async function getTasksFromDB() {
   const response = await fetch(
@@ -42,6 +38,24 @@ async function getGradesFromDB() {
   return data;
 }
 
+async function generateGradeInGeneral() {
+  const response = await fetch(
+    "https://chatte-a619b-default-rtdb.europe-west1.firebasedatabase.app/grades.json",
+    {
+      method: "GET",
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  const data = await response.json();
+  const result = data.reduce((prev, number) => prev + +number, 0) / data.length;
+  console.log(result);
+  return result;
+}
+
+//----------
 async function addHomeworkToDocument() {
   let tasksToCreate = (await getTasksFromDB()) || [];
   textOfTasks = tasksToCreate.map(function createHwTemplate(item) {
@@ -64,7 +78,9 @@ function generateHwTask(tasktemplate) {
 }
 
 addHomeworkToDocument();
+//----------
 
+//----------
 async function addGradeToDocument() {
   let tasksToCreate = (await getGradesFromDB()) || [];
   textOfTasks = tasksToCreate.map(function createGradeTemplate(item) {
@@ -77,8 +93,18 @@ async function addGradeToDocument() {
   textOfTasks.map((item) => generateGradeTask(item));
 }
 
-function generateGradeTask(gradetemplate) {
-  gradesContainer.insertAdjacentHTML("afterbegin", gradetemplate);
+async function generateGradeTask(gradetemplate) {
+  await gradesContainer.insertAdjacentHTML("afterbegin", gradetemplate);
 }
 
 addGradeToDocument();
+//----------
+
+//----------
+async function addGeneralGradeToDocument() {
+  gradeInGenContainer.innerText = await generateGradeInGeneral();
+  console.log(generateGradeInGeneral());
+}
+
+addGeneralGradeToDocument();
+//----------

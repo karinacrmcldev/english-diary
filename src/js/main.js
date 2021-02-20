@@ -117,9 +117,9 @@ async function getGradesFromDB() {
 //   );
 //   const data = await response.json();
 //   const result = data.reduce((prev, number) => prev + +number, 0) / data.length;
-//   // return result;
-//   console.log(result);
+//   return result;
 // }
+// generateGradeInGeneral();
 
 //function which display elements in the main page(useless code right here)
 
